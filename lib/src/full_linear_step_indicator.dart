@@ -171,14 +171,11 @@ class _FullLinearStepIndicatorState extends State<FullLinearStepIndicator> {
                       color: node.completed
                           ? widget.activeNodeColor
                           : widget.inActiveNodeColor,
-
                     ),
                     child: Text(
                       "${nodes.indexOf(node) + 1}",
                       style: TextStyle(
-                        color:  node.completed
-                            ? Colors.white
-                            : Colors.black,
+                        color: node.completed ? Colors.white : Colors.black,
                       ),
                     ),
                   ),
@@ -219,9 +216,7 @@ class _FullLinearStepIndicatorState extends State<FullLinearStepIndicator> {
                     if (widget.labels[i] !=
                         widget.labels[widget.steps - 1]) ...[
                       SizedBox(
-                        width: widget.steps > 3
-                            ? context.screenWidth(1 / widget.steps) - 45
-                            : context.screenWidth(1 / widget.steps) - 35,
+                        width: context.screenWidth(1 / widget.steps) - 35,
                       ),
                     ],
                   ],
