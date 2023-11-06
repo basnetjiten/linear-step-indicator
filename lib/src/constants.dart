@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 const double kIconSize = 16;
-const double kDefaultSize = 20;
+const double kDefaultSize = 15;
 const double kDefaultThickness = 2;
 const double kDefaultLineHeight = 7;
 const IconData kCompletedIcon = Icons.check_outlined;
