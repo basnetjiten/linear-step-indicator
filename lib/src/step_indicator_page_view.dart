@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:linear_step_indicator/linear_step_indicator.dart';
 import 'package:linear_step_indicator/src/linear_step_indicator.dart';
 import 'package:linear_step_indicator/src/constants.dart';
 
@@ -130,7 +131,7 @@ class StepIndicatorPageView extends StatelessWidget {
         child: Column(
           children: [
             if (indicatorPosition == IndicatorPosition.top) ...[
-              LinearStepIndicator(
+              FullLinearStepIndicator(
                 labels: labels,
                 steps: steps,
                 controller: controller,
@@ -164,7 +165,7 @@ class StepIndicatorPageView extends StatelessWidget {
             ),
             if (indicatorPosition == IndicatorPosition.bottom) ...[
               SizedBox(height: spacing),
-              LinearStepIndicator(
+              FullLinearStepIndicator(
                 steps: steps,
                 controller: controller,
                 backgroundColor: backgroundColor,
