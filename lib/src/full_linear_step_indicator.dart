@@ -110,7 +110,7 @@ class _FullLinearStepIndicatorState extends State<FullLinearStepIndicator> {
   @override
   void initState() {
     super.initState();
-    nodes = List<Node>.generate(widget.steps, (index) => Node(step: index));
+    nodes = List<Node>.generate(widget.steps-1, (index) => Node(step: index));
     lastStep = 0;
 
     //listen to page changes to track when each step is ideally completed
@@ -129,10 +129,10 @@ class _FullLinearStepIndicatorState extends State<FullLinearStepIndicator> {
         //checks if the controller has hit the max step
         //and checks [complete] to complete last node (or not)
 
-        if (widget.controller.page! == widget.steps - 1 &&
+        if (widget.controller.page! == widget.steps &&
             widget.complete != null) {
           if (await widget.complete!()) {
-            nodes[widget.steps - 1].completed = true;
+            nodes[widget.steps].completed = true;
             setState(() {});
           }
         }
@@ -142,86 +142,65 @@ class _FullLinearStepIndicatorState extends State<FullLinearStepIndicator> {
 
   @override
   Widget build(BuildContext context) {
+    print("steps ${widget.steps}");
+
     return Material(
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: widget.verticalPadding),
         color: widget.backgroundColor,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                for (var node in nodes) ...[
-                  if (nodes.indexOf(node) == 0) ...{
-                    Container(
-                      color: node.completed
-                          ? widget.activeLineColor
-                          : widget.inActiveLineColor,
-                      height: widget.lineHeight,
-                      width: context.screenWidth(1 / widget.steps) * .25,
-                    ),
-                  },
-                  Container(
-                    alignment: Alignment.center,
-                    height: 32,
-                    width: 32,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: node.completed
-                          ? widget.activeNodeColor
-                          : widget.inActiveNodeColor,
-                    ),
-                    child: Text(
-                      "${nodes.indexOf(node) + 1}",
-                      style: TextStyle(
-                        color: node.completed ? Colors.white : Colors.black,
-                      ),
+            for (var node in nodes) ...[
+              if (nodes.indexOf(node) == 0) ...{
+                Container(
+                  color: node.completed
+                      ? widget.activeLineColor
+                      : widget.inActiveLineColor,
+                  height: widget.lineHeight,
+                  width: widget.steps ==3
+                      ? context.screenWidth(1 / widget.steps) * .45
+                      : context.screenWidth(1 / widget.steps) * .45,
+                ),
+              },
+
+                Container(
+                  alignment: Alignment.center,
+                  height: 32,
+                  width: 32,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: node.completed
+                        ? widget.activeNodeColor
+                        : widget.inActiveNodeColor,
+                  ),
+                  child: Text(
+                    "${nodes.indexOf(node) + 1}",
+                    style: TextStyle(
+                      color: node.completed ? Colors.white : Colors.black,
                     ),
                   ),
-                  if (node.step != widget.steps - 1)
-                    Container(
-                      color: node.completed
-                          ? widget.activeLineColor
-                          : widget.inActiveLineColor,
-                      height: widget.lineHeight,
-                      width: widget.steps > 3
-                          ? context.screenWidth(1 / widget.steps) - 40
-                          : context.screenWidth(1 / widget.steps) - 28,
-                    ),
-                  if (nodes.indexOf(node) == widget.steps - 1) ...{
-                    Container(
-                      color: node.completed
-                          ? widget.activeLineColor
-                          : widget.inActiveLineColor,
-                      height: widget.lineHeight,
-                      width: context.screenWidth(1 / widget.steps) * .25,
-                    ),
-                  },
-                ],
-              ],
-            ),
-            SizedBox(height: 6),
-            if (widget.labels.length > 0) ...[
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  for (int i = 0; i < widget.labels.length; i++) ...[
-                    Text(
-                      widget.labels[i],
-                      style: nodes[i].completed
-                          ? widget.activeLabelStyle
-                          : widget.inActiveLabelStyle,
-                    ),
-                    if (widget.labels[i] !=
-                        widget.labels[widget.steps - 1]) ...[
-                      SizedBox(
-                        width: context.screenWidth(1 / widget.steps) - 35,
-                      ),
-                    ],
-                  ],
-                ],
-              ),
+                ),
+              if (node.step != widget.steps - 1)
+                Container(
+                  color: node.completed
+                      ? widget.activeLineColor
+                      : widget.inActiveLineColor,
+                  height: widget.lineHeight,
+                  width: widget.steps >= 3
+                      ? context.screenWidth(1 / widget.steps) - 50
+                      : context.screenWidth(1 / widget.steps) - 28,
+                ),
+              if (nodes.indexOf(node) == widget.steps - 1) ...{
+                Container(
+                  color: node.completed
+                      ? widget.activeLineColor
+                      : widget.inActiveLineColor,
+                  height: widget.lineHeight,
+                  width: widget.steps == 3
+                      ? context.screenWidth(1 / widget.steps) * .45
+                      : 0,
+                ),
+              },
             ],
           ],
         ),

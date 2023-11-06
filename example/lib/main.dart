@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:linear_step_indicator/linear_step_indicator.dart';
 
-const int STEPS = 3;
+const int STEPS = 4;
 
 void main() {
   runApp(MyApp());
@@ -59,53 +59,55 @@ class _StepIndicatorPageViewDemoState extends State<StepIndicatorPageViewDemo> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: Column(
-        children: [
-          SizedBox(
-            height: 500,
-            child: StepIndicatorPageView(
-              physics: NeverScrollableScrollPhysics(),
-              steps: STEPS,
-              indicatorPosition: IndicatorPosition.top,
-              controller: pageController,
-              complete: () {
-                //typically, you'd want to put logic that returns true when all the steps
-                //are completed here
-                return Future.value(true);
-              },
-              children: List<Widget>.generate(
-                STEPS,
-                (index) => Container(
-                  color: Color(0xffffffff),
-                  child: Center(
-                    child: Text(
-                      "Page ${index}",
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w500,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        child: Column(
+          children: [
+            Expanded(
+              child: StepIndicatorPageView(
+                physics: NeverScrollableScrollPhysics(),
+                steps: STEPS,
+                indicatorPosition: IndicatorPosition.top,
+                controller: pageController,
+                complete: () {
+                  //typically, you'd want to put logic that returns true when all the steps
+                  //are completed here
+                  return Future.value(true);
+                },
+                children: List<Widget>.generate(
+                  STEPS,
+                  (index) => Container(
+                    color: Color(0xffffffff),
+                    child: Center(
+                      child: Text(
+                        "Page ${index}",
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-          Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        //initialPage=pageController.initialPage;
-                        initialPage++;
-                      });
-                      pageController.jumpToPage(initialPage);
-                      print(initialPage);
-                    },
-                    child: const Text('Continue')),
-              ))
-        ],
+            Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          //initialPage=pageController.initialPage;
+                          initialPage++;
+                        });
+                        pageController.jumpToPage(initialPage);
+                        print(initialPage);
+                      },
+                      child: const Text('Continue')),
+                ))
+          ],
+        ),
       ),
     );
   }
