@@ -158,8 +158,8 @@ class _FullLinearStepIndicatorState extends State<FullLinearStepIndicator> {
                       : widget.inActiveLineColor,
                   height: widget.lineHeight,
                   width: widget.steps ==3
-                      ? context.screenWidth(1 / widget.steps) * .45
-                      : context.screenWidth(1 / widget.steps) * .45,
+                      ? context.screenWidth(1 / widget.steps) * .55
+                      : context.screenWidth(1 / widget.steps) * .48,
                 ),
               },
 
@@ -186,11 +186,11 @@ class _FullLinearStepIndicatorState extends State<FullLinearStepIndicator> {
                       ? widget.activeLineColor
                       : widget.inActiveLineColor,
                   height: widget.lineHeight,
-                  width: widget.steps >= 3
-                      ? context.screenWidth(1 / widget.steps) - 50
-                      : context.screenWidth(1 / widget.steps) - 28,
+                  width: widget.steps > 3
+                      ? context.screenWidth(1 / widget.steps) - 40
+                      : context.screenWidth(1 / widget.steps) - 45,
                 ),
-              if (nodes.indexOf(node) == widget.steps - 1) ...{
+              if (nodes.indexOf(node) == widget.steps-1) ...{
                 Container(
                   color: node.completed
                       ? widget.activeLineColor
@@ -198,7 +198,7 @@ class _FullLinearStepIndicatorState extends State<FullLinearStepIndicator> {
                   height: widget.lineHeight,
                   width: widget.steps == 3
                       ? context.screenWidth(1 / widget.steps) * .45
-                      : 0,
+                      : context.screenWidth(1 / widget.steps) * .25,
                 ),
               },
             ],

@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:linear_step_indicator/linear_step_indicator.dart';
 
-const int STEPS = 4;
+const int STEPS = 3;
 
 void main() {
   runApp(MyApp());
@@ -45,15 +45,12 @@ class _StepIndicatorPageViewDemoState extends State<StepIndicatorPageViewDemo> {
       initialPage: initialPage,
       viewportFraction: 0.9,
     );
-    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-    //  if(initialPage==1){
-    //    pageController.animateToPage(
-    //      1,
-    //      duration: const Duration(milliseconds: 300),
-    //      curve: Curves.easeInOut,
-    //    );
-    //  }
-    // });
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (initialPage == 0) {
+        pageController.jumpToPage(1);
+        //pageController.jumpTo(1);
+      }
+    });
   }
 
   @override
@@ -97,12 +94,11 @@ class _StepIndicatorPageViewDemoState extends State<StepIndicatorPageViewDemo> {
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
                       onPressed: () {
-                        setState(() {
-                          //initialPage=pageController.initialPage;
-                          initialPage++;
-                        });
-                        pageController.jumpToPage(initialPage);
-                        print(initialPage);
+                        if (pageController.page == 1) {
+                          pageController.jumpToPage(2);
+                        } else if (pageController.page == 2) {
+                          pageController.jumpToPage(3);
+                        }
                       },
                       child: const Text('Continue')),
                 ))
